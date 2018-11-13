@@ -1,0 +1,13 @@
+install no oficial de mysql python 64 bits
+MySQL_python-1.2.5-cp27-none-win_amd64.whl
+
+
+set FLASK_DEBUG=1 #para no tener que reiniar la app ante cada cambio, se setea la variable de debug up
+C:\xampp\htdocs\WeatherWebServices\app>python app.py
+
+
+=======================================================
+No va!
+
+flask run
+=======================================================

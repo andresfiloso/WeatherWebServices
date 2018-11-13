@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+ 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <title>WWS - Weather Web Services</title>
+  
+</head>
+
+<body>
+    <br><br><br>
+
+   <div class="container">
+        <div class="login-register" >
+            <div class="login-box card">
+                <div class="card-body">
+                    <form class="form-horizontal form-material" action="/login" method="POST">
+                        <h3 class="box-title m-b-20">Iniciar Sesión</h3>
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <input value="" class="form-control" name="user" type="text" required="" placeholder="Usuario"> 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input value="" class="form-control" name="pass" type="password" required="" placeholder="Contraseña"> </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="checkbox checkbox-primary pull-left p-t-0">
+                                    <input id="checkbox-signup" type="checkbox">
+                                    <label for="checkbox-signup"> Recuerdame </label>
+                                </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Olvide mi clave</a> </div>
+                        </div>
+                        <div class="form-group text-center m-t-20">
+                            <div class="col-xs-12">
+                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Ingresar</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="col-sm-12 text-center">
+                                <p>No tenés una cuenta? <a href="/signup" class="text-info m-l-5"><b>Registrate</b></a></p>
+                                
+                                {% block body %}
+                                  {% if session['error'] %}
+                                    <div class="alert alert-danger" role="alert">{{session.pop('error')}} </div>
+                                  {% endif %}
+                                  {% if session['status'] %}
+                                    <div class="alert alert-info" role="alert">{{session.pop('status')}} </div>
+                                  {% endif %}
+                                {% endblock %}
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
