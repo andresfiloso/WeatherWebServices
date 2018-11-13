@@ -67,5 +67,28 @@
             </div>
         </div>
     </div>
+
+    <br><br>
+
+    <div class="container">
+
+        <h3>
+            Ciudades principales:
+        </h3>
+        <br>
+                               
+        {% for key in mediciones_principales %}
+
+
+         <h5>{{ mediciones_principales[key]['ciudad'] }}, {{ mediciones_principales[key]['pais'] }}</h5>
+            {{ mediciones_principales[key]['temp'] }}º
+            <h5>{{ mediciones_principales[key]['clima'] }} <img src="http://openweathermap.org/img/w/{{ mediciones_principales[key]['icon'] }}.png"> </h5>
+        <p>-----------------------------------------------</p>
+        {% endfor %}
+
+ 
+            
+    </div>
+
 </body>
 </html>

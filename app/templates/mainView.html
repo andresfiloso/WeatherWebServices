@@ -21,12 +21,29 @@
    <div class="container">
         <h3>Bienvenido {{ session['isLogged'] }} </h3>
 
-        <h5>data (json completo)</h5>
-        <p>{{ data }}</p>
+        <br>
 
-        <h5>data['weather']</h5>
-        <p>{{ data['weather'] }}</p>
+        <h3>Clima actual: </h3>
 
+            <h5>{{ current_weather['ciudad'] }}</h5>
+            {{ current_weather['temp'] }}º
+            <h5>{{ current_weather['clima'] }} <img src="http://openweathermap.org/img/w/{{ current_weather['icon'] }}.png"> </h5>
+            
+            <br>
+        
+        <h3>Proximos 5 dias. (Falta procesar estas mediciones para hacer una unica por dia)</h3>
+
+
+        {% for key in forecast %}
+
+            <h5>{{ forecast[key]['hora'] }} <img src="http://openweathermap.org/img/w/{{ forecast[key]['icon'] }}.png"> </h5>
+            Min: {{ forecast[key]['temp_min'] }}º <br>
+            Max: {{ forecast[key]['temp_max'] }}º <br>
+            <br>
+            ---------------------
+      
+        {% endfor %}
+  
 
     </div>
 </body>

@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, redirect, session, url_for, request, json
-
+from flask import Flask, render_template, redirect, session, url_for
 from datasource import *
 from controller import *
 
@@ -21,13 +20,21 @@ def default():
 def home():
     if session.get('isLogged') is not None:
 
-        with open('example.json', 'r') as file: #abro el example.json
-            data = json.load(file)
-        
+        city = 'banfield'  # id for Banfield
+          # api key
+        current_weather = get_current_city(city)
+
+        forecast = get_forecast_all(city)
+
+
         return render_template('mainView.html', **locals()) #**locals() pasa todos las variables utilizadas a la vista
     else:
         #error = "Session Timeout"
-        return render_template('login.html',)
+
+        ciudades = ["Banfield", "Lomas de Zamora", "Avellaneda", "Amsterdam", "Rio de Janeiro"]
+        mediciones_principales = get_mediciones_principales(ciudades) # la idea seria que no pase parametros. que dentro del procedimiento vaya a buscar tambien las ciudades mas visitadas de forma independiente
+
+        return render_template('login.html', **locals())
 
 
 @app.route('/login', methods = ['POST', 'GET'])
