@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!"C:\Python27\python.exe
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect, session, url_for, request, json
 
