@@ -43,8 +43,8 @@
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-            <li><a href="#">{{ session['isLogged'] }}</a></li>
-            <li><a href="#logout">Salir</a></li>
+            <li><a href="/home">{{ session['isLogged'] }}</a></li>
+            <li><a href="/logout">Salir</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -54,90 +54,83 @@
   <main id="main">
 
 
-    <section id="contact" class="wow fadeInUp">
-      <div class="container">
-        <div class="section-header">
-          <h2>Clima actual</h2>
-        </div>
-
-        <div class="row contact-info">
-
-            
-         <div class="col-md-4">
-         </div>
-          <div class="col-md-4">
-            <div class="contact-address">
-              <img src="http://openweathermap.org/img/w/{{ current_weather['icon'] }}.png"> 
-              <h6>{{ current_weather['ciudad'] }}</h6>
-              <address> {{ current_weather['temp'] }}º</address>
-              <address><h6>{{ current_weather['clima'] }}  </h6></address>
+    <div class="container">
+     <div class="row">
+         <div class="col-md-6">
+        <section id="contact" class="wow fadeInUp">
+          <div class="container">
+            <div class="section-header">
+              <h2>Clima actual</h2>
             </div>
-          </div>
-           <div class="col-md-4"></div>
-          
 
-  
-        </div>
-      </div>
+            <div class="row contact-info">
 
+                
 
-    </section><!-- #contact -->
+              <div class="col-md-12">
+                <div class="contact-address">
+                  <img src="http://openweathermap.org/img/w/{{ current_weather['icon'] }}.png"> 
+                  <h6>{{ current_weather['ciudad'] }}</h6>
+                  <address> {{ current_weather['temp'] }}º</address>
+                  <address><h6>{{ current_weather['clima'] }}  </h6></address>
+                </div>
+              </div>
 
-
-    <section id="contact" class="wow fadeInUp">
-      <div class="container">
-        <div class="section-header">
-          <h2>Mediciones</h2>
-        </div>
-
-        <div class="row contact-info">
-
-            
-            {% for key in forecast %}
-          <div class="col-md-4">
-            <div class="contact-address">
-               <img src="http://openweathermap.org/img/w/{{ forecast[key]['icon'] }}.png"> 
-              <h6>{{ forecast[key]['hora'] }}</h6>
-              <address> Min: {{ forecast[key]['temp_min'] }}º</address>
-              <address>Max: {{ forecast[key]['temp_max'] }}º</address>
-            </div>
-          </div>
-        {% endfor %}
-
-
+              
 
       
+            </div>
+          </div>
+
         
-          
 
-  
+        </section>
         </div>
-      </div>
+         <div class="col-md-6">
+        <section id="contact" class="wow fadeInUp">
+          <div class="container">
+            <div class="section-header">
+              <h2>Buscar pronóstico</h2>
+            </div>
+
+            <div class="row contact-info">
+
+                
+ 
+              <div class="col-md-6">
+
+                <form class="form" action="/search_city" method="GET" id="formLogin"> 
+                    <input type="text" name="ciudad" placeholder="Buscar ciudad">
+                    <br><br>
+                    <button type="submit">Buscar</button>
+                </form>
+
+              </div>
+ 
+              
+
+      
+            </div>
+          </div>
 
 
-    </section><!-- #contact -->
+        </section>
+    </div>
+    </div>
+    </div>
+
+    
 
   </main>
 
-  <!--==========================
-    Footer
-  ============================-->
-  <footer id="footer">
-    <div class="container">
-      <div class="copyright">
-        &copy; Copyright <strong>UNLa</strong>. All Rights Reserved
-      </div>
-      
-    </div>
-  </footer><!-- #footer -->
+  {% include 'footer.html' %}
 
-  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  
 
   <!-- JavaScript Libraries -->
   <script src="static/lib/jquery/jquery.min.js"></script>
   <script src="static/lib/jquery/jquery-migrate.min.js"></script>
   <script src="static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="static/lib/easing/easing.min.js"></script>
   <script src="static/lib/superfish/hoverIntent.js"></script>
   <script src="static/lib/superfish/superfish.min.js"></script>
   <script src="static/lib/wow/wow.min.js"></script>

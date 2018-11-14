@@ -16,6 +16,11 @@ datasource = DataSource()
 def default():
     return redirect(url_for('home'),code=307)
 
+@app.route('/logout', methods = ['POST', 'GET'])
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
+
 @app.route('/home', methods = ['POST', 'GET'])
 def home():
     if session.get('isLogged') is not None:
@@ -50,6 +55,20 @@ def login():
         else:
             session['error'] = 'Usuario o clave incorrecta!'
             return redirect(url_for('home'))
+
+@app.route('/search_city', methods = ['POST', 'GET'])
+def search_city():
+    if request.method == 'GET':
+        city = request.args.get('ciudad')
+
+        forecast = get_forecast_all(city)
+
+        print forecast[0]['ciudad']
+        print forecast[0]['pais']
+
+        return render_template('forecast.html', **locals())
+            
+            
 
 if __name__ == "__main__":
     app.debug = True

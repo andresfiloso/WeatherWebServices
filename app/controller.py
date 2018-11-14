@@ -72,6 +72,7 @@ def get_forecast_all(city):
 	forecast = json.loads(req.text)
 
 	name = forecast['city']['name']
+	pais = forecast['city']['country']
 	mediciones = {}
 
 
@@ -83,11 +84,13 @@ def get_forecast_all(city):
 		temp_max = medicion['main']['temp_max']
 		icon = str(medicion['weather'][0]['icon'])
 		
+		
 		m = {
 			'ciudad' : name,
 			'hora' : hora, 
 			'temp_min' : temp_min,
 			'temp_max' : temp_max, 
+			'pais': pais, 
 			'icon': icon,
 		}
 

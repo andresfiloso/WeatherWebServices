@@ -43,11 +43,8 @@
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-            <form class="form" action="/login" method="POST" id="formLogin"> 
-              <input name="user" id="username" type="text" placeholder="Usuario"> 
-              <input name="pass" id="password" type="password" placeholder="Clave">
-              <button type="submit" id="btnLogin" class="btn">Ingresar</button>
-            </form>
+            <li><a href="/home">{{ session['isLogged'] }}</a></li>
+            <li><a href="/logout">Salir</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -56,25 +53,29 @@
 
   <main id="main">
 
-
     <section id="contact" class="wow fadeInUp">
       <div class="container">
         <div class="section-header">
-          <h2>Principales ciudades</h2>
+          <h2>Pronostico de {{ forecast[0]['ciudad'] }}, {{ forecast[0]['pais'] }}</h2>
         </div>
 
         <div class="row contact-info">
 
-          {% for key in mediciones_principales %}
-          <div class="col-md-2">
+            
+            {% for key in forecast %}
+          <div class="col-md-4">
             <div class="contact-address">
-              <img src="http://openweathermap.org/img/w/{{ mediciones_principales[key]['icon'] }}.png">
-              <h6>{{ mediciones_principales[key]['ciudad'] }}, {{ mediciones_principales[key]['pais'] }}</h6>
-              <address>{{ mediciones_principales[key]['temp'] }}º</address>
-              <address><h6>{{ mediciones_principales[key]['clima'] }} </h6></address>
+               <img src="http://openweathermap.org/img/w/{{ forecast[key]['icon'] }}.png"> 
+              <h6>{{ forecast[key]['hora'] }}</h6>
+              <address> Min: {{ forecast[key]['temp_min'] }}º</address>
+              <address>Max: {{ forecast[key]['temp_max'] }}º</address>
             </div>
           </div>
-          {% endfor %}
+        {% endfor %}
+
+
+        
+      </div>
   
         </div>
       </div>
@@ -85,6 +86,7 @@
   </main>
 
   {% include 'footer.html' %}
+
 
   <!-- JavaScript Libraries -->
   <script src="static/lib/jquery/jquery.min.js"></script>
