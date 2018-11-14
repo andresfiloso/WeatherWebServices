@@ -19,34 +19,124 @@ reload(sys)  # Reload does the trick!
 sys.setdefaultencoding('UTF8')
 
 def auth_user(user, password):
-	
-	if(user == "admin"):
-		session['isLogged'] = user
-		return 1
 
-	"""
 	cur = get_cur(datasource)
 
-	sql = ("SELECT * FROM usuario where usuario = '" + user + "' and pass = '" + password + "'")
+	sql = ("SELECT * FROM usuario WHERE usuario = '" + user + "' AND password = '" + password + "'")
+	print sql
+	rows = cur.execute(sql)
+
+	usuario = ""
+	ciudad = ""
+	idCiudad = ""
+
+	for row in cur:
+
+		idUsuario = row[0]
+		usuario = row[1]
+		idCiudad = str(row[3])
+		
+	
+	sql = ("SELECT ciudad FROM ciudad WHERE idCiudad = " + idCiudad)
+	print sql
+	rows = cur.execute(sql)
+	
+	for row in cur:
+
+		ciudad = row[0]
+		print "encontro la ciudad: " + ciudad		
+
+	usuario = {
+			'idUsuario': idUsuario, 
+			'usuario' : usuario,
+			'ciudad' : ciudad,
+			}
+
+	session['usuario'] = usuario
+
+	return rows
+
+	
+def insert_user(user, password, ciudad):
+	print "Hola entre en el controller piola"
+	
+	sql = ("INSERT INTO `usuario` (`usuario`, `password`, `idCiudad`) VALUES ('"+user+"', '"+password+"', '"+ciudad+"');")
+	print sql
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+	return rows
+
+def update_city(idUsuario, idCiudad):
+	sql = ("UPDATE `usuario` SET `idCiudad` = '" + str(idCiudad) + "' WHERE `usuario`.`idUsuario` = '" + str(idUsuario) + "';")
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+
+	ciudad = ""
+
+	cur = get_cur(datasource)
+	sql = ("SELECT ciudad FROM ciudad WHERE idCiudad = " + str(idCiudad))
+	print sql
 	rows = cur.execute(sql)
 
 	for row in cur:
-		usuario = Usuario(row['idUsuario'], row['usuario'], row['email'])
-		session['usuario'] = usuario.getIdUsuario()
-		return rows
-	"""
+		ciudad = row[0]
+
+	usuario = session['usuario']['usuario']
+
+	session.clear()
+
+	updated_user={}
+
+	updated_user = {
+			'idUsuario': idUsuario, 
+			'usuario' : usuario,
+			'ciudad' : ciudad,
+			}
+
+	session['usuario'] = updated_user
+
+	return rows
+
+def get_cities():
+
+	cur = get_cur(datasource)
+
+	sql = ("SELECT * FROM ciudad")
+	rows = cur.execute(sql)
+
+	ciudades = {}
+	i = 0
+
+	for row in cur.fetchall():
+
+		ciudad = {
+			'idCiudad': row[0], 
+			'ciudad' : unicode(row[1], errors='replace'),
+			'codigo_ciudad' : row[2],
+			'latitud' : row[3],
+			'longitud' : row[4],
+			}
+
+		ciudades[i] = ciudad
+
+		i += 1
+
 	
+	
+	with open('data/ciudades.json', 'w') as file:
+		json.dump(ciudades, file)
 
 
+		
 def get_current_city(city):
 	current_data = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=' + key + '&units=metric' # full url
 
 	req = requests.get(current_data)
 	current = json.loads(req.text)
 
-	print city
-	print current_data
-	print req.text
+	#print city
+	#print current_data
+	#print req.text
 
 
 	ciudad = current['name']
@@ -106,14 +196,14 @@ def get_mediciones_principales(): # la idea seria que no pase parametros. que de
 
 	ciudades = get_main_citys()
 
-	print ciudades
+	#print ciudades
 
-	print len(ciudades)
+	#print len(ciudades)
 
 	for i in range(len(ciudades)):
 		mediciones_principales[i] = get_current_city(ciudades[i])
 
-	print mediciones_principales
+	#print mediciones_principales
 
 	return mediciones_principales
 
@@ -131,7 +221,7 @@ def get_main_citys():
 		ciudades[i] = row[0].decode('latin-1')
 		i += 1
 
-	print ciudades
+	#print ciudades
 	return ciudades
 
 
