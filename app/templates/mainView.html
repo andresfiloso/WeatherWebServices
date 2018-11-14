@@ -35,7 +35,7 @@
      function initialize() {
         var input = document.getElementById('searchTextField');
         var options = {
-          types: ['geocode'] //this should work !
+          types: ['(cities)']
         };
         var autocomplete = new google.maps.places.Autocomplete(input, options);
      }
@@ -113,7 +113,7 @@
               <div class="col-md-6">
 
                 <form class="form" action="/search_city" method="GET" id="formLogin"> 
-                    <input id="searchTextField" type="text" name="ciudad" size="50" placeholder="Enter a location" autocomplete="on">
+                    <input id="searchTextField" type="text" name="ciudad" size="50" placeholder="Buscar ciudad" autocomplete="on">
                     <br><br>
                     <button type="submit">Buscar</button>
                 </form>
@@ -151,7 +151,7 @@
       <div class="modal-body">
         <section id="contact">
         <div class="container">
-            <input type="text" name="ciudad" placeholder="Nueva ciudad">  
+            <input id="searchTextField" type="text" name="ciudad" size="50" placeholder="Nueva ciudad" autocomplete="on">
         </div>
          </section>
     </div>
