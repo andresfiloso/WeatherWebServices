@@ -13,7 +13,7 @@ class DataSource:
 		self.cur = set_cur(self)
 
 def set_db():
-	db = MySQLdb.connect(host="127.0.0.1", user="root", passwd="1324657980", db="bdapiclima")
+	db = MySQLdb.connect(host="127.0.0.1", user="root", passwd="root", db="bdapiclima")
 	return db
 
 def get_db(self):

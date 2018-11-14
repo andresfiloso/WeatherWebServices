@@ -45,7 +45,9 @@ def get_current_city(city):
 	current = json.loads(req.text)
 
 	print city
+	print current_data
 	print req.text
+
 
 	ciudad = current['name']
 	temp = current['main']['temp']
@@ -96,8 +98,12 @@ def get_forecast_all(city):
 	return mediciones
 
 
-def get_mediciones_principales(ciudades): # la idea seria que no pase parametros. que dentro del procedimiento vaya a buscar tambien las ciudades mas visitadas de forma independiente
+def get_mediciones_principales(): # la idea seria que no pase parametros. que dentro del procedimiento vaya a buscar tambien las ciudades mas visitadas de forma independiente
 	mediciones_principales = {}
+
+	ciudades = get_main_citys()
+
+	print ciudades
 
 	print len(ciudades)
 
@@ -107,6 +113,23 @@ def get_mediciones_principales(ciudades): # la idea seria que no pase parametros
 	print mediciones_principales
 
 	return mediciones_principales
+
+
+def get_main_citys():
+	cur = get_cur(datasource)
+
+	sql = ("SELECT ciudad FROM ciudad ORDER BY cantidad_busquedas DESC LIMIT 5")
+	rows = cur.execute(sql)
+
+	ciudades = {}
+	i = 0
+
+	for row in cur.fetchall():
+		ciudades[i] = row[0].decode('latin-1')
+		i += 1
+
+	print ciudades
+	return ciudades
 
 
 def get_forecast_avg(city):

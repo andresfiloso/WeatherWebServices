@@ -31,8 +31,9 @@ def home():
     else:
         #error = "Session Timeout"
 
-        ciudades = ["Banfield", "Lomas de Zamora", "Avellaneda", "Amsterdam", "Rio de Janeiro"]
-        mediciones_principales = get_mediciones_principales(ciudades) # la idea seria que no pase parametros. que dentro del procedimiento vaya a buscar tambien las ciudades mas visitadas de forma independiente
+        mediciones_principales = get_mediciones_principales() # la idea seria que no pase parametros. que dentro del procedimiento vaya a buscar tambien las ciudades mas visitadas de forma independiente
+
+        get_main_citys()
 
         return render_template('login.html', **locals())
 

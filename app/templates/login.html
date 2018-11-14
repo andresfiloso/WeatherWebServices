@@ -1,94 +1,117 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
- 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <title>Weather Web Service</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
 
-    <title>WWS - Weather Web Services</title>
-  
+  <!-- Favicons -->
+  <link href="static/img/favicon.png" rel="icon">
+  <link href="static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="static/lib/animate/animate.min.css" rel="stylesheet">
+  <link href="static/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="static/lib/magnific-popup/magnific-popup.css" rel="stylesheet">
+  <link href="static/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="static/css/style.css" rel="stylesheet">
+
 </head>
 
-<body>
-    <br><br><br>
+<body id="body">
 
-   <div class="container">
-        <div class="login-register" >
-            <div class="login-box card">
-                <div class="card-body">
-                    <form class="form-horizontal form-material" action="/login" method="POST">
-                        <h3 class="box-title m-b-20">Iniciar Sesión</h3>
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <input value="" class="form-control" name="user" type="text" required="" placeholder="Usuario"> 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input value="" class="form-control" name="pass" type="password" required="" placeholder="Contraseña"> </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="checkbox checkbox-primary pull-left p-t-0">
-                                    <input id="checkbox-signup" type="checkbox">
-                                    <label for="checkbox-signup"> Recuerdame </label>
-                                </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Olvide mi clave</a> </div>
-                        </div>
-                        <div class="form-group text-center m-t-20">
-                            <div class="col-xs-12">
-                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Ingresar</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                        </div>
-                        <div class="form-group m-b-0">
-                            <div class="col-sm-12 text-center">
-                                <p>No tenés una cuenta? <a href="/signup" class="text-info m-l-5"><b>Registrate</b></a></p>
-                                
-                                {% block body %}
-                                  {% if session['error'] %}
-                                    <div class="alert alert-danger" role="alert">{{session.pop('error')}} </div>
-                                  {% endif %}
-                                  {% if session['status'] %}
-                                    <div class="alert alert-info" role="alert">{{session.pop('status')}} </div>
-                                  {% endif %}
-                                {% endblock %}
-
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br><br>
-
+  <header id="header">
     <div class="container">
 
-        <h3>
-            Ciudades principales:
-        </h3>
-        <br>
-                               
-        {% for key in mediciones_principales %}
+      <div id="logo" class="pull-left">
+        <h1><a href="#body" class="scrollto">UNLa<span>Weather</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
+      </div>
 
-
-         <h5>{{ mediciones_principales[key]['ciudad'] }}, {{ mediciones_principales[key]['pais'] }}</h5>
-            {{ mediciones_principales[key]['temp'] }}º
-            <h5>{{ mediciones_principales[key]['clima'] }} <img src="http://openweathermap.org/img/w/{{ mediciones_principales[key]['icon'] }}.png"> </h5>
-        <p>-----------------------------------------------</p>
-        {% endfor %}
-
- 
-            
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+            <form class="form" action="/login" method="POST" id="formLogin"> 
+              <input name="user" id="username" type="text" placeholder="Usuario"> 
+              <input name="pass" id="password" type="password" placeholder="Clave">
+              <button type="submit" id="btnLogin" class="btn">Ingresar</button>
+            </form>
+        </ul>
+      </nav><!-- #nav-menu-container -->
     </div>
+  </header><!-- #header -->
+
+
+  <main id="main">
+
+
+    <section id="contact" class="wow fadeInUp">
+      <div class="container">
+        <div class="section-header">
+          <h2>Principales ciudades</h2>
+        </div>
+
+        <div class="row contact-info">
+
+          {% for key in mediciones_principales %}
+          <div class="col-md-3">
+            <div class="contact-address">
+              <img src="http://openweathermap.org/img/w/{{ mediciones_principales[key]['icon'] }}.png">
+              <h6>{{ mediciones_principales[key]['ciudad'] }}, {{ mediciones_principales[key]['pais'] }}</h6>
+              <address>{{ mediciones_principales[key]['temp'] }}º</address>
+              <address><h6>{{ mediciones_principales[key]['clima'] }} </h6></address>
+            </div>
+          </div>
+          {% endfor %}
+  
+        </div>
+      </div>
+
+
+    </section><!-- #contact -->
+
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>UNLa</strong>. All Rights Reserved
+      </div>
+      
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="static/lib/jquery/jquery.min.js"></script>
+  <script src="static/lib/jquery/jquery-migrate.min.js"></script>
+  <script src="static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/lib/easing/easing.min.js"></script>
+  <script src="static/lib/superfish/hoverIntent.js"></script>
+  <script src="static/lib/superfish/superfish.min.js"></script>
+  <script src="static/lib/wow/wow.min.js"></script>
+  <script src="static/lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="static/lib/magnific-popup/magnific-popup.min.js"></script>
+  <script src="static/lib/sticky/sticky.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="static/js/main.js"></script>
 
 </body>
 </html>
