@@ -30,6 +30,18 @@
 
 </head>
 
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
+  <script type="text/javascript">
+     function initialize() {
+        var input = document.getElementById('searchTextField');
+        var options = {
+          types: ['geocode'] //this should work !
+        };
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+     }
+     google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+
 <body id="body">
 
   <header id="header">
@@ -101,10 +113,11 @@
               <div class="col-md-6">
 
                 <form class="form" action="/search_city" method="GET" id="formLogin"> 
-                    <input type="text" name="ciudad" placeholder="Buscar ciudad">
+                    <input id="searchTextField" type="text" name="ciudad" size="50" placeholder="Enter a location" autocomplete="on">
                     <br><br>
                     <button type="submit">Buscar</button>
                 </form>
+
 
               </div>
  

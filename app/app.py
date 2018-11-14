@@ -101,7 +101,7 @@ def change_city():
 @app.route('/search_city', methods = ['POST', 'GET'])
 def search_city():
     if request.method == 'GET':
-        city = request.args.get('ciudad')
+        city = str(request.args.get('ciudad'))
 
         forecast = get_forecast_all(city)
 
