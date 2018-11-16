@@ -1,6 +1,6 @@
 #!"C:\Python27\python.exe
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, redirect, session, url_for
+from flask import Flask, render_template, redirect, session, url_for, jsonify
 from datasource import *
 from controller import *
 
@@ -103,13 +103,43 @@ def search_city():
     if request.method == 'GET':
         city = str(request.args.get('ciudad'))
 
-        forecast = get_forecast_all(city)
 
-        print forecast[0]['ciudad']
-        print forecast[0]['pais']
+        forecast = get_forecast_avg(city)
+
+        print "-----------------------------------------------------"
+        print "Estas son las mediciones a mostrar: " + str(forecast)
+
+        print "-----------------------------------------------------"
+
+        print "-----------------------------------------------------"
+
+        print "-----------------------------------------------------"
+
+        print "-----------------------------------------------------"
+
+
+        for i in range(6):
+            print forecast[i]['ciudad']
+            print forecast[i]['temp_min']
+            print forecast[i]['temp_max']
+            print forecast[i]['icon']
+
 
         return render_template('forecast.html', **locals())
             
+
+@app.route('/lookup_city', methods = ['POST', 'GET'])
+def lookup_city():
+    if request.method == 'GET':
+        city = str(request.args.get('data'))
+
+        print "CIUDAD: " + city
+
+        cities = select_cities(city)
+
+        print cities
+          
+        return jsonify(result=cities)
             
 
 if __name__ == "__main__":

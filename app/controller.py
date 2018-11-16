@@ -127,6 +127,31 @@ def get_cities():
 		json.dump(ciudades, file)
 
 
+def select_cities(ciudad):
+
+	cur = get_cur(datasource)
+
+	sql = ("SELECT * FROM ciudad where ciudad LIKE '"+ ciudad +"%' LIMIT 5")
+	rows = cur.execute(sql)
+
+	ciudades = {}
+	i = 0
+
+	for row in cur.fetchall():
+
+		ciudad = {
+			'idCiudad': row[0], 
+			'ciudad' : unicode(row[1], errors='replace'),
+			'codigo_ciudad' : row[2],
+			'latitud' : row[3],
+			'longitud' : row[4],
+			}
+
+		ciudades[i] = ciudad
+
+		i += 1
+
+	return ciudades
 		
 def get_current_city(city):
 	current_data = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&APPID=' + key + '&units=metric' # full url
@@ -227,7 +252,7 @@ def get_main_citys():
 
 def get_forecast_avg(city):
 	mediciones = get_forecast_all(city)
-
+	mediciones_avg = []
 
 	datetime_today = datetime.today()
 	dia = datetime_today.day
@@ -235,13 +260,39 @@ def get_forecast_avg(city):
 	minimo = 200
 	maximo = -200
 
+	dia0 = dia
+	dia1 = dia+1
+	dia2 = dia1+1
+	dia3 = dia2+1
+	dia4 = dia3+1
+	dia5 = dia4+1
+
+	print "Hoy: " + str(dia0)
+	print "tomorrow: " + str(dia1)
+	print "tomorrow +1 : " + str(dia2)
+	print "tomorrow +2 : " + str(dia3)
+	print "tomorrow +3 : " + str(dia4)
+	print "tomorrow +4 : " + str(dia5)
+
+
+	evDay = dia0
+
+	i = 0
 
 	for key in mediciones:
 
 		name = mediciones[key]['ciudad']
+		pais = mediciones[key]['pais']
+
 		datetime_medicion = datetime.strptime(mediciones[key]['hora'], '%Y-%m-%d %H:%M:%S')
 
-		if(datetime_medicion.day == dia):
+		fecha = datetime_medicion.strftime("%d-%m-%Y")
+ 
+		print  fecha
+
+		if(datetime_medicion.day == evDay):
+			print "Encontre la fecha a evaluar....."
+
 			temp_min = mediciones[key]['temp_min']
 			temp_max = mediciones[key]['temp_max']
 
@@ -252,32 +303,53 @@ def get_forecast_avg(city):
 				icon = str(mediciones[key]['icon']) # se va a tomar como icono del dia el que corresponde a la mayor temperatura
 
 
-			print "Medicion: " + str(key) 
-			print "Hasta ahora la temperatura maxima del " + str(datetime_medicion.strftime("%d/%m/%Y")) + " es: " + str(maximo)
-			print "Hasta ahora la temperatura minima del " + str(datetime_medicion.strftime("%d/%m/%Y")) + " es: " + str(minimo)
+			print "Medicion: " + str(datetime_medicion.hour) 
+			print "Hasta ahora la temperatura maxima del primer dia es: " + str(maximo)
+			print "Hasta ahora la temperatura minima del primer dia es: " + str(minimo)
 			print "-------------"
 
-		else:
-			minimo = 200
-			maximo = 200
-			
-			mediciones = {
-				'ciudad' : name,
-				'fecha' : datetime_medicion.strftime("%d/%m/%Y"), 
-				'temp_min' : minimo,
-				'temp_max' : maximo, 
-				'icon': icon,
+			m = {
+			'ciudad' : name,
+			'fecha' : fecha, 
+			'temp_min' : minimo,
+			'temp_max' : maximo, 
+			'pais': pais, 
+			'icon': icon,
 			}
 
-			temp_min = mediciones[key]['temp_min']
-			temp_max = mediciones[key]['temp_max']
+			print "hasta ahora lo que voy a mostrar para esta fecha es: " + str(m)
 
-			if(temp_min < minimo):
-				minimo = temp_min
-			if(temp_max > maximo):
-				maximo = temp_max
-				icon = str(mediciones[key]['icon']) # se va a tomar como icono del dia el que corresponde a la mayor temperatura
-			datetime_medicion.day = dia
+
+			print "Evday = : " + str(evDay)
+			print "dia5: " + str(dia5)
+			print ""
+
+			if(evDay == dia5 and datetime_medicion.hour == 18):
+				mediciones_avg.append(m)
+				return mediciones_avg
+
+		else:
+			print "La fecha es distinta...."
+			minimo = 200
+			maximo = - 200
+
+			print "VALOR DE I -------------------------------------------- > " + str(i)
+			if(i <= 5):
+				print "valor de i: " + str(i)
+				print "Pasamos a la proxima fecha: "
+				mediciones_avg.append(m)
+				print "Hasta ahora las mediciones a pasar son estas: " + str(mediciones_avg)
+				evDay = evDay + 1
+
+				print "-----------------------------------"
+				print "Ahora vamos a ir por el dia: " + str(evDay)
+				i += 1
+				
+
+
+
+
+
 
 
 		

@@ -62,17 +62,19 @@
         <div class="row contact-info">
 
             
-            {% for key in forecast %}
+            {% for i in range(6) %}
           <div class="col-md-4">
             <div class="contact-address">
-               <img src="http://openweathermap.org/img/w/{{ forecast[key]['icon'] }}.png"> 
-              <h6>{{ forecast[key]['hora'] }}</h6>
-              <address> Min: {{ forecast[key]['temp_min'] }}º</address>
-              <address>Max: {{ forecast[key]['temp_max'] }}º</address>
+               <img src="http://openweathermap.org/img/w/{{ forecast[i]['icon'] }}.png"> 
+              <h6>{{ forecast[i]['fecha'] }}</h6>
+              <address> Min: {{ forecast[i]['temp_min'] }}º</address>
+              <address>Max: {{ forecast[i]['temp_max'] }}º</address>
             </div>
           </div>
         {% endfor %}
 
+
+        
 
         
       </div>

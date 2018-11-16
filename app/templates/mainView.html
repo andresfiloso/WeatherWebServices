@@ -28,21 +28,90 @@
   <!-- Main Stylesheet File -->
   <link href="static/css/style.css" rel="stylesheet">
 
+ <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script> 
+
+ <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+   
+  <script>
+
+    var availableCities = []
+         
+
+i = 0;
+$(document).ready(function(){
+    $("input").keypress(function(){
+        i+=1
+
+        ciudad = document.getElementById('automplete-1').value
+        if(ciudad.length > 2){
+          
+
+          console.log("Se va a buscar: " + ciudad)
+
+           $.ajax({
+                type: "GET",
+                url: "/lookup_city",
+                contentType: 'application/json;charset=UTF-8',
+                data: {'data': ciudad},
+                success: function (data) {
+
+                  data = data.result
+
+                  availableCities = []
+
+                   for(var i in data)
+                    {
+                        var idCiudad = data[i].idCiudad;
+
+                        var codigo = data[i].codigo_ciudad;
+                         var ciudad = data[i].ciudad;
+
+                         
+                        console.log(idCiudad + " - " +ciudad + ", " + codigo)
+
+                        availableCities.push(ciudad + ", " + codigo);
+
+
+                    }
+
+                    console.log(availableCities);
+
+                    $(function() {
+                      $( "#automplete-1" ).autocomplete({
+                         source: availableCities
+                      });
+                   });
+
+                    
+                },
+                error : function (xhr, ajaxOptions, thrownError){  
+                  console.log(xhr.status);          
+                  console.log(thrownError);
+                }
+            });
+
+        } 
+    });
+});
+</script>
+   
+
+
 </head>
 
-  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places" type="text/javascript"></script>
-  <script type="text/javascript">
-     function initialize() {
-        var input = document.getElementById('searchTextField');
-        var options = {
-          types: ['(cities)']
-        };
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
-     }
-     google.maps.event.addDomListener(window, 'load', initialize);
-  </script>
+  
+
+
+  
+
 
 <body id="body">
+
+
+  <!-- HTML --> 
+     
 
   <header id="header">
     <div class="container">
@@ -113,7 +182,9 @@
               <div class="col-md-6">
 
                 <form class="form" action="/search_city" method="GET" id="formLogin"> 
-                    <input id="searchTextField" type="text" name="ciudad" size="50" placeholder="Buscar ciudad" autocomplete="on">
+                    <input id = "automplete-1" type="text" name="ciudad" size="50" placeholder="Buscar ciudad" autocomplete="on">
+
+
                     <br><br>
                     <button type="submit">Buscar</button>
                 </form>
@@ -164,16 +235,11 @@
   </form>
   </div>
 </div>
-
-
+  
 
   {% include 'footer.html' %}
 
-  
 
-  <!-- JavaScript Libraries -->
-  <script src="static/lib/jquery/jquery.min.js"></script>
-  <script src="static/lib/jquery/jquery-migrate.min.js"></script>
   <script src="static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="static/lib/superfish/hoverIntent.js"></script>
   <script src="static/lib/superfish/superfish.min.js"></script>
