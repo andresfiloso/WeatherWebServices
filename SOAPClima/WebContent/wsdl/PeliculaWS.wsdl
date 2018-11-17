@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://impl.services.soap" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://impl.services.soap" xmlns:intf="http://impl.services.soap" xmlns:tns1="http://beans.soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://impl.services.soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://beans.soap"/>
+   <element name="existePelicula">
+    <complexType>
+     <sequence>
+      <element name="titulo" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="existePeliculaResponse">
+    <complexType>
+     <sequence>
+      <element name="existePeliculaReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="traerPeliculasPorActor">
+    <complexType>
+     <sequence>
+      <element name="actor" type="tns1:Actor"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="traerPeliculasPorActorResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="traerPeliculasPorActorReturn" type="tns1:Pelicula"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://beans.soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="Actor">
+    <sequence>
+     <element name="apellido" nillable="true" type="xsd:string"/>
+     <element name="nombre" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="Pelicula">
+    <sequence>
+     <element name="descripcion" nillable="true" type="xsd:string"/>
+     <element name="fecha" type="xsd:int"/>
+     <element name="idioma" nillable="true" type="xsd:string"/>
+     <element name="titulo" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="traerPeliculasPorActorRequest">
+
+      <wsdl:part element="impl:traerPeliculasPorActor" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existePeliculaRequest">
+
+      <wsdl:part element="impl:existePelicula" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="traerPeliculasPorActorResponse">
+
+      <wsdl:part element="impl:traerPeliculasPorActorResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="existePeliculaResponse">
+
+      <wsdl:part element="impl:existePeliculaResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="PeliculaServiceImpl">
+
+      <wsdl:operation name="existePelicula">
+
+         <wsdl:input message="impl:existePeliculaRequest" name="existePeliculaRequest"/>
+
+         <wsdl:output message="impl:existePeliculaResponse" name="existePeliculaResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="traerPeliculasPorActor">
+
+         <wsdl:input message="impl:traerPeliculasPorActorRequest" name="traerPeliculasPorActorRequest"/>
+
+         <wsdl:output message="impl:traerPeliculasPorActorResponse" name="traerPeliculasPorActorResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="PeliculaServiceImplSoapBinding" type="impl:PeliculaServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="existePelicula">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="existePeliculaRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="existePeliculaResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="traerPeliculasPorActor">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="traerPeliculasPorActorRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="traerPeliculasPorActorResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="PeliculaServiceImplService">
+
+      <wsdl:port binding="impl:PeliculaServiceImplSoapBinding" name="PeliculaServiceImpl">
+
+         <wsdlsoap:address location="http://localhost:8081/SOAP/services/PeliculaServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://impl.services.soap" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://impl.services.soap" xmlns:intf="http://impl.services.soap" xmlns:tns1="http://beans.soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://impl.services.soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://beans.soap"/>
+   <element name="altaUsuario">
+    <complexType>
+     <sequence>
+      <element name="usuario" type="tns1:Usuario"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="altaUsuarioResponse">
+    <complexType>
+     <sequence>
+      <element name="altaUsuarioReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="bajaUsuario">
+    <complexType>
+     <sequence>
+      <element name="usuario" type="tns1:Usuario"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="bajaUsuarioResponse">
+    <complexType>
+     <sequence>
+      <element name="bajaUsuarioReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://beans.soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="Ciudad">
+    <sequence>
+     <element name="cantidad_busquedas" type="xsd:int"/>
+     <element name="ciudad" nillable="true" type="xsd:string"/>
+     <element name="codigo_ciudad" nillable="true" type="xsd:string"/>
+     <element name="idCiudad" type="xsd:int"/>
+     <element name="latitud" type="xsd:double"/>
+     <element name="longitud" type="xsd:double"/>
+    </sequence>
+   </complexType>
+   <complexType name="Usuario">
+    <sequence>
+     <element name="ciudad" nillable="true" type="tns1:Ciudad"/>
+     <element name="idusuario" type="xsd:int"/>
+     <element name="password" nillable="true" type="xsd:string"/>
+     <element name="usuario" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="altaUsuarioRequest">
+
+      <wsdl:part element="impl:altaUsuario" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="altaUsuarioResponse">
+
+      <wsdl:part element="impl:altaUsuarioResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="bajaUsuarioRequest">
+
+      <wsdl:part element="impl:bajaUsuario" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="bajaUsuarioResponse">
+
+      <wsdl:part element="impl:bajaUsuarioResponse" name="parameters"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="UsuarioServiceImpl">
+
+      <wsdl:operation name="altaUsuario">
+
+         <wsdl:input message="impl:altaUsuarioRequest" name="altaUsuarioRequest"/>
+
+         <wsdl:output message="impl:altaUsuarioResponse" name="altaUsuarioResponse"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="bajaUsuario">
+
+         <wsdl:input message="impl:bajaUsuarioRequest" name="bajaUsuarioRequest"/>
+
+         <wsdl:output message="impl:bajaUsuarioResponse" name="bajaUsuarioResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="UsuarioServiceImplSoapBinding" type="impl:UsuarioServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="altaUsuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="altaUsuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="altaUsuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="bajaUsuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="bajaUsuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="bajaUsuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="UsuarioServiceImplService">
+
+      <wsdl:port binding="impl:UsuarioServiceImplSoapBinding" name="UsuarioServiceImpl">
+
+         <wsdlsoap:address location="http://localhost:8081/SOAPClima/services/UsuarioServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

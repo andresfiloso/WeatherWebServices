@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from UsuarioServiceImplService WSDL service -->
+
+  <service name="UsuarioServiceImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://impl.services.soap"/>
+      <parameter name="wsdlServiceElement" value="UsuarioServiceImplService"/>
+      <parameter name="schemaQualified" value="http://beans.soap,http://impl.services.soap"/>
+      <parameter name="wsdlServicePort" value="UsuarioServiceImpl"/>
+      <parameter name="className" value="soap.services.impl.UsuarioServiceImpl"/>
+      <parameter name="wsdlPortType" value="UsuarioServiceImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://impl.services.soap" xmlns:retNS="http://impl.services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="altaUsuario" qname="operNS:altaUsuario" returnQName="retNS:altaUsuarioReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://impl.services.soap" xmlns:tns="http://beans.soap" qname="pns:usuario" type="tns:Usuario"/>
+      </operation>
+      <operation xmlns:operNS="http://impl.services.soap" xmlns:retNS="http://impl.services.soap" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="bajaUsuario" qname="operNS:bajaUsuario" returnQName="retNS:bajaUsuarioReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://impl.services.soap" xmlns:tns="http://beans.soap" qname="pns:usuario" type="tns:Usuario"/>
+      </operation>
+      <parameter name="allowedMethods" value="altaUsuario bajaUsuario"/>
+
+      <typeMapping xmlns:ns="http://beans.soap" qname="ns:Ciudad" type="java:soap.beans.Ciudad" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://beans.soap" qname="ns:Usuario" type="java:soap.beans.Usuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
