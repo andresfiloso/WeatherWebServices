@@ -56,19 +56,35 @@ def sign_up():
     return render_template('sign_up.html', **locals())
 
 
-@app.route('/new_user', methods = ['POST', 'GET'])
+@app.route('/new_user', methods = ['POST', 'GET', 'PUT'])
 def new_user():
-    if request.method == 'POST':
+    if request.method == 'PUT':
         user = request.form["user"] 
         password = request.form["pass"]
         ciudad = request.form["ciudad"]
 
-        if(insert_user(user, password, ciudad)):
+        print user
+        print password
+        print ciudad
+
+        idCiudad = ciudad.split('-')[0]
+
+
+        print "Id ciudad: " + str(idCiudad)
+
+
+        if(insert_user(user, password, idCiudad)):
             print "Usuario creado:  " + user
+            session['success'] = "Usuario creado con exito"
             return redirect(url_for('home'))
         else:
             session['error'] = 'Error al registrar usuario'
             return redirect(url_for('home'))
+    else:
+        print "No entro en el metodo"
+        session['error'] = 'No entro en el method'
+        return redirect(url_for('home'))
+
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
@@ -86,10 +102,17 @@ def login():
 
 @app.route('/change_city', methods = ['POST', 'GET'])
 def change_city():
-    if request.method == 'POST':
-        idCiudad = request.form["ciudad"] 
+    if request.method == 'GET':
+        ciudad = request.args.get('ciudad')
+
+        print ciudad
 
         idUsuario = session['usuario']['idUsuario']
+
+        idCiudad = ciudad.split('-')[0]
+
+        print "Id ciudad: " + str(idCiudad)
+
 
         if(update_city(idUsuario, idCiudad)):
             print "Ciudad modificada:  " + session['usuario']['ciudad'] + " en user: " + session['usuario']['usuario']
@@ -97,6 +120,32 @@ def change_city():
         else:
             session['error'] = 'Error al modificar la ciudad'
             return redirect(url_for('home'))
+
+@app.route('/change_city_view', methods = ['POST', 'GET'])
+def change_city_view():
+    return render_template('change_city.html', **locals())
+
+@app.route('/delete_user_view', methods = ['POST', 'GET'])
+def delete_user_view():
+    return render_template('delete_user_view.html', **locals())
+
+
+@app.route('/delete_user', methods = ['POST', 'GET', 'DELETE'])
+def delete_user():
+    if request.method == 'DELETE':
+        user = request.form["user"] 
+        password = request.form["pass"]
+
+        if(drop_user(user, password)):
+            session.clear()
+            return redirect(url_for('home'))
+        else:
+            session['error'] = 'Error al eliminar usuario'
+            return redirect(url_for('home'))
+    else:
+        print "No entro en el metodo"
+        session['error'] = 'No entro en el method'
+        return redirect(url_for('home'))
 
 @app.route('/search_city', methods = ['POST', 'GET'])
 def search_city():

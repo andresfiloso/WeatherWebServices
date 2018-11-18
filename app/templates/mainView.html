@@ -55,6 +55,7 @@ $(document).ready(function(){
                 url: "/lookup_city",
                 contentType: 'application/json;charset=UTF-8',
                 data: {'data': ciudad},
+                async: false,
                 success: function (data) {
 
                   data = data.result
@@ -154,9 +155,11 @@ $(document).ready(function(){
                   <h6>{{ current_weather['ciudad'] }}</h6>
                   <address> {{ current_weather['temp'] }}º</address>
                   <address><h6>{{ current_weather['clima'] }}  </h6></address>
-                  <b><button type="button" class="btn btn-inverse" data-toggle="modal" data-target="#exampleModal">Cambiar ciudad</button></b>
+                  <a href="/change_city_view"><b><button type="button" class="btn btn-inverse">Cambiar ciudad</button></b></a>
                 </div>
+                 <h6><a href="delete_user_view">Darse de baja</a></h6>
               </div>
+
 
               
 
@@ -199,14 +202,18 @@ $(document).ready(function(){
           </div>
 
 
+
+
         </section>
     </div>
     </div>
     </div>
 
     
-
   </main>
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -222,7 +229,7 @@ $(document).ready(function(){
       <div class="modal-body">
         <section id="contact">
         <div class="container">
-            <input id="searchTextField" type="text" name="ciudad" size="50" placeholder="Nueva ciudad" autocomplete="on">
+           <input id = "automplete-1" type="text" name="ciudad" size="50" placeholder="Buscar ciudad" autocomplete="on">
         </div>
          </section>
     </div>
@@ -235,6 +242,9 @@ $(document).ready(function(){
   </form>
   </div>
 </div>
+
+
+
   
 
   {% include 'footer.html' %}

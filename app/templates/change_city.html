@@ -57,35 +57,21 @@ $(document).ready(function(){
                 data: {'data': ciudad},
                 async: false,
                 success: function (data) {
-
                   data = data.result
-
                   availableCities = []
-
-                   for(var i in data)
-                    {
-                        var idCiudad = data[i].idCiudad;
-
-                        var codigo = data[i].codigo_ciudad;
-                         var ciudad = data[i].ciudad;
-
-                         
-                        console.log(idCiudad + " - " +ciudad + ", " + codigo)
-
-                        availableCities.push(idCiudad + " - " + ciudad + ", " + codigo);
-
-
+                   for(var i in data){
+                      var idCiudad = data[i].idCiudad;
+                      var codigo = data[i].codigo_ciudad;
+                      var ciudad = data[i].ciudad;
+                      console.log(idCiudad + " - " +ciudad + ", " + codigo)
+                      availableCities.push(idCiudad + " - " + ciudad + ", " + codigo);
                     }
-
                     console.log(availableCities);
-
                     $(function() {
                       $( "#automplete-1" ).autocomplete({
                          source: availableCities
                       });
-                   });
-
-                    
+                  });
                 },
                 error : function (xhr, ajaxOptions, thrownError){  
                   console.log(xhr.status);          
@@ -104,6 +90,10 @@ $(document).ready(function(){
 
   
 
+
+  
+
+
 <body id="body">
 
 
@@ -121,6 +111,8 @@ $(document).ready(function(){
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
+            <li><a href="/home">{{ session['usuario'].usuario }}</a></li>
+            <li><a href="/logout">Salir</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -130,71 +122,48 @@ $(document).ready(function(){
   <main id="main">
 
 
-    <section id="contact" class="wow fadeInUp">
     <div class="container">
-      <div class="row">
-        <div class="col-md-4"></div>
-         <div class="col-md-4">
-        <div class="login-register" >
-            <div class="login-box card">
-                <div class="card-body">
-                    <form class="form-horizontal form-material" action="/new_user" method="PUT">
-                        <h3 class="box-title m-b-20">Registrarse</h3>
-                        <div class="form-group ">
-                            <div class="col-xs-12">
-                                <input value="" class="form-control" name="user" type="text" required="" placeholder="Usuario"> 
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <input value="" class="form-control" name="pass" type="password" required="" placeholder="Contraseña"> </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                               <input id = "automplete-1" class="form-control" type="text" name="ciudad" size="50" placeholder="Ciudad" autocomplete="on">
-                        </div>
-                        <br>
-
-                        <div class="form-group text-center m-t-20">
-                            <div class="col-xs-12">
-                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Registrarse</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                        </div>
-                        <div class="form-group m-b-0">
-                            <div class="col-sm-12 text-center">
-
-                                {% block body %}
-                                  {% if session['error'] %}
-                                    <div class="alert alert-danger" role="alert">{{session.pop('error')}} </div>
-                                  {% endif %}
-                                {% endblock %}
-
-                            </div>
-                        </div>
-                    </form>
-                </div>
+     <div class="row">
+         <div class="col-md-6">
+        <section id="contact" class="wow fadeInUp">
+          <div class="container">
+            <div class="section-header">
+              <h2>Cambiar ciudad</h2>
             </div>
-        </div>
 
-      </div>
+            <div class="row contact-info">
+
+                
+ 
+              <div class="col-md-6">
+
+                <form class="form" action="/change_city" method="GET" id="formLogin"> 
+                    <input id = "automplete-1" type="text" name="ciudad" size="50" placeholder="Buscar ciudad" autocomplete="on">
+
+
+                    <br><br>
+                    <button type="submit">Actualizar</button>
+                </form>
+
+
+              </div>
+ 
+              
+
+      
+            </div>
+          </div>
+
+
+        </section>
     </div>
-
-
     </div>
-    </section><!-- #contact -->
-
+    </div>
 
     
+
   </main>
 
-
-
-
-
-  
 
   {% include 'footer.html' %}
 

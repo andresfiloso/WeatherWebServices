@@ -39,7 +39,9 @@
         <h1><a href="#body" class="scrollto">UNLa<span>Weather</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
+
       </div>
+
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
@@ -49,6 +51,16 @@
               <button type="submit" id="btnLogin" class="btn">Ingresar</button>
             </form>
             <a href="/sign_up">Registrarse</a>
+
+              {% block body %}
+                  {% if session['error'] %}
+                  - {{session.pop('error')}}
+                  {% endif %}
+                  {% if session['success'] %}
+                  - {{session.pop('success')}}
+                  {% endif %}
+
+                {% endblock %}
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>

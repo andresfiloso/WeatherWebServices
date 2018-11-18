@@ -30,43 +30,68 @@ def auth_user(user, password):
 	ciudad = ""
 	idCiudad = ""
 
-	for row in cur:
+	print rows
 
-		idUsuario = row[0]
-		usuario = row[1]
-		idCiudad = str(row[3])
+	if(rows):
+		for row in cur:
+
+			idUsuario = row[0]
+			usuario = row[1]
+			idCiudad = str(row[3])
+			
 		
-	
-	sql = ("SELECT ciudad FROM ciudad WHERE idCiudad = " + idCiudad)
-	print sql
-	rows = cur.execute(sql)
-	
-	for row in cur:
+			sql = ("SELECT ciudad FROM ciudad WHERE idCiudad = " + idCiudad)
+			print sql
+			rows = cur.execute(sql)
+			
+			for row in cur:
 
-		ciudad = row[0]
-		print "encontro la ciudad: " + ciudad		
+				ciudad = row[0]
+				print "encontro la ciudad: " + ciudad		
 
-	usuario = {
-			'idUsuario': idUsuario, 
-			'usuario' : usuario,
-			'ciudad' : ciudad,
-			}
+			usuario = {
+					'idUsuario': idUsuario, 
+					'usuario' : usuario,
+					'ciudad' : ciudad,
+					}
 
-	session['usuario'] = usuario
+			session['usuario'] = usuario
 
 	return rows
-
 	
-def insert_user(user, password, ciudad):
+def insert_user(user, password, idCiudad):
 	print "Hola entre en el controller piola"
 	
-	sql = ("INSERT INTO `usuario` (`usuario`, `password`, `idCiudad`) VALUES ('"+user+"', '"+password+"', '"+ciudad+"');")
+	sql = ("INSERT INTO `usuario` (`usuario`, `password`, `idCiudad`) VALUES ('"+ user +"', '"+ password +"', '"+ idCiudad +"');")
 	print sql
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
 	return rows
 
+def drop_user(user, password):
+	
+	cur = get_cur(datasource)
+
+	sql = ("SELECT * FROM usuario WHERE usuario = '" + user + "' AND password = '" + password + "'")
+	print sql
+	rows = cur.execute(sql)
+
+	idUsuario = ""
+	
+	for row in cur:
+		idUsuario = row[0]
+
+
+	sql = ("DELETE FROM `usuario` WHERE (`idUsuario` = '"+ str(idUsuario) +"')")
+	print sql
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+
+	return rows
+
+
 def update_city(idUsuario, idCiudad):
+
 	sql = ("UPDATE `usuario` SET `idCiudad` = '" + str(idCiudad) + "' WHERE `usuario`.`idUsuario` = '" + str(idUsuario) + "';")
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
