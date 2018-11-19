@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -32,28 +32,10 @@
   <ns1:parameter name="allowedMethods" value="getVersion"/>
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
- <ns1:service name="PeliculaServiceImpl" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="existePelicula" qname="ns1:existePelicula" returnQName="ns1:existePeliculaReturn" returnType="xsd:boolean" soapAction="" xmlns:ns1="http://impl.services.soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
-   <ns2:parameter qname="ns1:titulo" type="xsd:string"/>
-  </ns2:operation>
-  <ns1:operation name="traerPeliculasPorActor" qname="ns2:traerPeliculasPorActor" returnQName="ns2:traerPeliculasPorActorReturn" returnType="ns3:Pelicula" soapAction="" xmlns:ns2="http://impl.services.soap" xmlns:ns3="http://beans.soap">
-   <ns1:parameter qname="ns2:actor" type="ns3:Actor"/>
-  </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="existePelicula traerPeliculasPorActor"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="wsdlPortType" value="PeliculaServiceImpl"/>
-  <ns1:parameter name="className" value="soap.services.impl.PeliculaServiceImpl"/>
-  <ns1:parameter name="wsdlServicePort" value="PeliculaServiceImpl"/>
-  <ns1:parameter name="schemaQualified" value="http://beans.soap,http://impl.services.soap"/>
-  <ns1:parameter name="wsdlTargetNamespace" value="http://impl.services.soap"/>
-  <ns1:parameter name="wsdlServiceElement" value="PeliculaServiceImplService"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns4:Pelicula" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Pelicula" xmlns:ns4="http://beans.soap"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns5:Actor" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Actor" xmlns:ns5="http://beans.soap"/>
- </ns1:service>
  <ns1:service name="PronosticoServiceImpl" provider="java:RPC" style="wrapped" use="literal">
-  <ns1:operation name="traerClima" qname="ns6:traerClima" returnQName="ns6:traerClimaReturn" returnType="ns7:Temperatura" soapAction="" xmlns:ns6="http://impl.services.soap" xmlns:ns7="http://beans.soap">
-   <ns1:parameter qname="ns6:ciudad" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  </ns1:operation>
+  <ns3:operation name="traerClima" qname="ns1:traerClima" returnQName="ns1:traerClimaReturn" returnType="ns2:Temperatura" soapAction="" xmlns:ns1="http://impl.services.soap" xmlns:ns2="http://beans.soap" xmlns:ns3="http://xml.apache.org/axis/wsdd/">
+   <ns3:parameter qname="ns1:ciudad" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns3:operation>
   <ns1:parameter name="allowedMethods" value="traerClima"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="PronosticoServiceImpl"/>
@@ -62,25 +44,25 @@
   <ns1:parameter name="schemaQualified" value="http://beans.soap,http://impl.services.soap"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://impl.services.soap"/>
   <ns1:parameter name="wsdlServiceElement" value="PronosticoServiceImplService"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns8:Temperatura" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Temperatura" xmlns:ns8="http://beans.soap"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns3:Temperatura" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Temperatura" xmlns:ns3="http://beans.soap"/>
  </ns1:service>
  <ns1:service name="UsuarioServiceImpl" provider="java:RPC" style="wrapped" use="literal">
-  <ns1:operation name="altaUsuario" qname="ns9:altaUsuario" returnQName="ns9:altaUsuarioReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://impl.services.soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns9:usuario" type="ns10:Usuario" xmlns:ns10="http://beans.soap"/>
+  <ns1:operation name="altaUsuario" qname="ns4:altaUsuario" returnQName="ns4:altaUsuarioReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://impl.services.soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:usuario" type="ns5:Usuario" xmlns:ns5="http://beans.soap"/>
   </ns1:operation>
-  <ns1:operation name="bajaUsuario" qname="ns11:bajaUsuario" returnQName="ns11:bajaUsuarioReturn" returnType="xsd:string" soapAction="" xmlns:ns11="http://impl.services.soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns11:usuario" type="ns12:Usuario" xmlns:ns12="http://beans.soap"/>
+  <ns1:operation name="bajaUsuario" qname="ns6:bajaUsuario" returnQName="ns6:bajaUsuarioReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://impl.services.soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns6:usuario" type="ns7:Usuario" xmlns:ns7="http://beans.soap"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="altaUsuario bajaUsuario"/>
-  <ns1:parameter name="wsdlPortType" value="UsuarioServiceImpl"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://beans.soap,http://impl.services.soap"/>
-  <ns1:parameter name="wsdlServicePort" value="UsuarioServiceImpl"/>
+  <ns1:parameter name="wsdlPortType" value="UsuarioServiceImpl"/>
   <ns1:parameter name="className" value="soap.services.impl.UsuarioServiceImpl"/>
+  <ns1:parameter name="wsdlServicePort" value="UsuarioServiceImpl"/>
+  <ns1:parameter name="schemaQualified" value="http://beans.soap,http://impl.services.soap"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://impl.services.soap"/>
   <ns1:parameter name="wsdlServiceElement" value="UsuarioServiceImplService"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns13:Ciudad" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Ciudad" xmlns:ns13="http://beans.soap"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns14:Usuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Usuario" xmlns:ns14="http://beans.soap"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns8:Ciudad" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Ciudad" xmlns:ns8="http://beans.soap"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns9:Usuario" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:soap.beans.Usuario" xmlns:ns9="http://beans.soap"/>
  </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>

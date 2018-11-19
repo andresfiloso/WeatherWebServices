@@ -12,7 +12,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import soap.beans.Pelicula;
 import soap.beans.Pronostico;
 import soap.beans.Temperatura;
 import soap.services.definition.PronosticoService;
@@ -27,7 +26,7 @@ public class PronosticoServiceImpl implements PronosticoService {
 		Pronostico pronostico = new Pronostico();
 		List<Temperatura> temperaturas = new ArrayList<Temperatura>();
 		try{
-			URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q="+ciudad+"&units=imperial&appid="+apikey);
+			URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q="+ciudad+"&units=metric&appid="+apikey);
 			InputStream is = url.openStream();
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 			StringBuilder sb = new StringBuilder();
@@ -81,8 +80,6 @@ public class PronosticoServiceImpl implements PronosticoService {
 		      is.close();
 		      rd.close();
 		    }
-
-			System.out.println("hola");
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
