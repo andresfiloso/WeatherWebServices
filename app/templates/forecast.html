@@ -28,6 +28,16 @@
   <!-- Main Stylesheet File -->
   <link href="static/css/style.css" rel="stylesheet">
 
+  
+     <style>
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
 </head>
 
 <body id="body">
@@ -62,7 +72,7 @@
         <div class="row contact-info">
 
             
-            {% for i in range(6) %}
+            {% for i in range(forecast|length) %}
           <div class="col-md-4">
             <div class="contact-address">
                <img src="http://openweathermap.org/img/w/{{ forecast[i]['icon'] }}.png"> 
@@ -74,20 +84,44 @@
         {% endfor %}
 
 
-        
 
         
       </div>
+
+
   
         </div>
       </div>
+
+
+
 
 
     </section><!-- #contact -->
 
   </main>
 
-  {% include 'footer.html' %}
+  
+
+  <div id="map" style="height:60%;width:50%;margin:0 auto;"></div>
+
+       <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: {{ forecast[0]['lat'] }}, lng: {{ forecast[0]['lon'] }}},
+          zoom: 14
+        });
+      }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNuFjXsm9PITzzcV6KhOAsddEN5c-S_BA&callback=initMap">
+    async defer></script>
+    
+    
+    <br><br>
+
+    {% include 'footer.html' %}
 
 
   <!-- JavaScript Libraries -->

@@ -13,13 +13,13 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/SOAPClima/WebContent/WEB-INF/lib/java-json.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/trabajo eclipse3/SOAP/WebContent/WEB-INF/lib/axis.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/trabajo eclipse3/SOAP/WebContent/WEB-INF/lib/commons-discovery-0.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/trabajo eclipse3/SOAP/WebContent/WEB-INF/lib/commons-logging.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/trabajo eclipse3/SOAP/WebContent/WEB-INF/lib/jaxrpc.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/trabajo eclipse3/SOAP/WebContent/WEB-INF/lib/saaj.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/trabajo eclipse3/SOAP/WebContent/WEB-INF/lib/wsdl4j.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Juampi/Desktop/SOAPClima/WebContent/WEB-INF/lib/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/axis.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/commons-discovery-0.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/java-json.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/jaxrpc.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/mysql-connector-java-8.0.13.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/saaj.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/xampp/htdocs/WeatherWebServices/SOAPClima/WebContent/WEB-INF/lib/wsdl4j.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

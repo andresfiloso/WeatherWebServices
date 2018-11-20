@@ -30,8 +30,6 @@ def auth_user(user, password):
 	ciudad = ""
 	idCiudad = ""
 
-	print rows
-
 	if(rows):
 		for row in cur:
 
@@ -47,7 +45,7 @@ def auth_user(user, password):
 			for row in cur:
 
 				ciudad = row[0]
-				print "encontro la ciudad: " + ciudad		
+				print "Found city: " + ciudad		
 
 			usuario = {
 					'idUsuario': idUsuario, 
@@ -60,19 +58,17 @@ def auth_user(user, password):
 	return rows
 	
 def insert_user(user, password, idCiudad):
-	print "Hola entre en el controller piola"
-	
 	sql = ("INSERT INTO `usuario` (`usuario`, `password`, `idCiudad`) VALUES ('"+ user +"', '"+ password +"', '"+ idCiudad +"');")
 	print sql
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
 	return rows
 
-def drop_user(user, password):
+def drop_user(user):
 	
 	cur = get_cur(datasource)
 
-	sql = ("SELECT * FROM usuario WHERE usuario = '" + user + "' AND password = '" + password + "'")
+	sql = ("SELECT * FROM usuario WHERE usuario = '" + user + "'")
 	print sql
 	rows = cur.execute(sql)
 
@@ -95,7 +91,7 @@ def update_city(idUsuario, idCiudad):
 	sql = ("UPDATE `usuario` SET `idCiudad` = '" + str(idCiudad) + "' WHERE `usuario`.`idUsuario` = '" + str(idUsuario) + "';")
 	rows = get_cur(datasource).execute(sql)
 	get_db(datasource).commit()
-
+	print sql
 	ciudad = ""
 
 	cur = get_cur(datasource)
@@ -158,7 +154,7 @@ def select_cities(ciudad):
 
 	sql = ("SELECT * FROM ciudad where ciudad LIKE '"+ ciudad +"%' LIMIT 5")
 	rows = cur.execute(sql)
-
+	print sql
 	ciudades = {}
 	i = 0
 
@@ -211,10 +207,15 @@ def get_forecast_all(city):
 	req = requests.get(forecast_data)
 	forecast = json.loads(req.text)
 
+	idCiudad = forecast['city']['id']
 	name = forecast['city']['name']
 	pais = forecast['city']['country']
+	lat = forecast['city']['coord']['lat']
+	lon = forecast['city']['coord']['lon']
+
 	mediciones = {}
 
+	#print req.text #full json response from api
 
 	i = 0
 	for medicion in forecast['list']:
@@ -226,10 +227,13 @@ def get_forecast_all(city):
 		
 		
 		m = {
+			'idCiudad': idCiudad,
 			'ciudad' : name,
 			'hora' : hora, 
 			'temp_min' : temp_min,
 			'temp_max' : temp_max, 
+			'lat': lat,
+			'lon': lon,
 			'pais': pais, 
 			'icon': icon,
 		}
@@ -279,6 +283,13 @@ def get_forecast_avg(city):
 	mediciones = get_forecast_all(city)
 	mediciones_avg = []
 
+	idCiudad = mediciones[0]['idCiudad']
+
+	sql = ("UPDATE ciudad SET cantidad_busquedas = cantidad_busquedas + 1 where idCiudad = "+ str(idCiudad) +";")
+	print sql
+	rows = get_cur(datasource).execute(sql)
+	get_db(datasource).commit()
+
 	datetime_today = datetime.today()
 	dia = datetime_today.day
 
@@ -292,14 +303,6 @@ def get_forecast_avg(city):
 	dia4 = dia3+1
 	dia5 = dia4+1
 
-	print "Hoy: " + str(dia0)
-	print "tomorrow: " + str(dia1)
-	print "tomorrow +1 : " + str(dia2)
-	print "tomorrow +2 : " + str(dia3)
-	print "tomorrow +3 : " + str(dia4)
-	print "tomorrow +4 : " + str(dia5)
-
-
 	evDay = dia0
 
 	i = 0
@@ -308,15 +311,18 @@ def get_forecast_avg(city):
 
 		name = mediciones[key]['ciudad']
 		pais = mediciones[key]['pais']
+		lat = mediciones[key]['lat']
+		lon = mediciones[key]['lon']
+
+		datetime_medicion_final = datetime.strptime(mediciones[len(mediciones)-1]['hora'], '%Y-%m-%d %H:%M:%S')
+
+		horaFinal = datetime_medicion_final.hour
 
 		datetime_medicion = datetime.strptime(mediciones[key]['hora'], '%Y-%m-%d %H:%M:%S')
 
 		fecha = datetime_medicion.strftime("%d-%m-%Y")
- 
-		print  fecha
 
 		if(datetime_medicion.day == evDay):
-			print "Encontre la fecha a evaluar....."
 
 			temp_min = mediciones[key]['temp_min']
 			temp_max = mediciones[key]['temp_max']
@@ -328,48 +334,48 @@ def get_forecast_avg(city):
 				icon = str(mediciones[key]['icon']) # se va a tomar como icono del dia el que corresponde a la mayor temperatura
 
 
-			print "Medicion: " + str(datetime_medicion.hour) 
-			print "Hasta ahora la temperatura maxima del primer dia es: " + str(maximo)
-			print "Hasta ahora la temperatura minima del primer dia es: " + str(minimo)
-			print "-------------"
+			#print "Medicion: " + str(datetime_medicion.hour) 
+			#print "Hasta ahora la temperatura maxima del primer dia es: " + str(maximo)
+			#print "Hasta ahora la temperatura minima del primer dia es: " + str(minimo)
+			#print "-------------"
 
 			m = {
 			'ciudad' : name,
 			'fecha' : fecha, 
 			'temp_min' : minimo,
 			'temp_max' : maximo, 
+			'lat': lat,
+			'lon': lon,
 			'pais': pais, 
 			'icon': icon,
 			}
 
-			print "hasta ahora lo que voy a mostrar para esta fecha es: " + str(m)
+			#print "hasta ahora lo que voy a mostrar para esta fecha es: " + str(m)
 
 
-			print "Evday = : " + str(evDay)
-			print "dia5: " + str(dia5)
-			print ""
+			#print "Evday = : " + str(evDay)
+			#print "dia5: " + str(dia5)
+			#print ""
 
-			if(evDay == dia5 and datetime_medicion.hour == 18):
+			#print "dia: " + str(evDay)
+			#print "Hora: " + str(datetime_medicion.hour)
+
+			if(evDay == dia5 and datetime_medicion.hour == horaFinal):
 				mediciones_avg.append(m)
 				return mediciones_avg
-
 		else:
-			print "La fecha es distinta...."
+			#print "La fecha es distinta...."
 			minimo = 200
 			maximo = - 200
 
-			print "VALOR DE I -------------------------------------------- > " + str(i)
-			if(i <= 5):
-				print "valor de i: " + str(i)
-				print "Pasamos a la proxima fecha: "
-				mediciones_avg.append(m)
-				print "Hasta ahora las mediciones a pasar son estas: " + str(mediciones_avg)
+			if(evDay != dia0):
+				if(i <= 5):
+					mediciones_avg.append(m)
+					#print "Hasta ahora las mediciones a pasar son estas: " + str(mediciones_avg)
+					evDay = evDay + 1
+					i += 1
+			else:
 				evDay = evDay + 1
-
-				print "-----------------------------------"
-				print "Ahora vamos a ir por el dia: " + str(evDay)
-				i += 1
-				
 
 
 

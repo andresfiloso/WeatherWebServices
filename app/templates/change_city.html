@@ -137,13 +137,13 @@ $(document).ready(function(){
  
               <div class="col-md-6">
 
-                <form class="form" action="/change_city" method="GET" id="formLogin"> 
+
                     <input id = "automplete-1" type="text" name="ciudad" size="50" placeholder="Buscar ciudad" autocomplete="on">
 
 
                     <br><br>
-                    <button type="submit">Actualizar</button>
-                </form>
+                    <button onclick="cambiarCiudad()" type="button">Actualizar</button>
+           
 
 
               </div>
@@ -163,6 +163,31 @@ $(document).ready(function(){
     
 
   </main>
+
+  <script>
+function cambiarCiudad() {
+  
+    ciudad = document.getElementById('automplete-1').value;
+
+    var ciudad = ciudad.split('-')[0];
+
+            $.ajax({
+                type: "PUT",
+                url: "/change_city/" + ciudad,
+                success: function (data) {
+
+                    window.location.replace("/home");
+                    
+                },
+
+                error : function (xhr, ajaxOptions, thrownError){  
+                  console.log(xhr.status);          
+                  console.log(thrownError);
+                }
+            });
+}
+</script>
+
 
 
   {% include 'footer.html' %}

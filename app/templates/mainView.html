@@ -97,6 +97,9 @@ $(document).ready(function(){
     });
 });
 </script>
+
+
+
    
 
 
@@ -157,13 +160,9 @@ $(document).ready(function(){
                   <address><h6>{{ current_weather['clima'] }}  </h6></address>
                   <a href="/change_city_view"><b><button type="button" class="btn btn-inverse">Cambiar ciudad</button></b></a>
                 </div>
-                 <h6><a href="delete_user_view">Darse de baja</a></h6>
+                 <h6><button onclick="borrarUsuario()" type="button" class="btn btn-inverse">Darse de baja</button></h6>
               </div>
 
-
-              
-
-      
             </div>
           </div>
 
@@ -212,37 +211,26 @@ $(document).ready(function(){
     
   </main>
 
+  
+  <script>
 
+function borrarUsuario() {
+   
+            $.ajax({
+                type: "DELETE",
+                url: "/delete_user",
+                success: function (data) {
 
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <form class="form" action="/change_city" method="POST" id="formLogin"> 
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cambiar ciudad</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <section id="contact">
-        <div class="container">
-           <input id = "automplete-1" type="text" name="ciudad" size="50" placeholder="Buscar ciudad" autocomplete="on">
-        </div>
-         </section>
-    </div>
-     
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="sumbit" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </form>
-  </div>
-</div>
-
+                    window.location.replace("/home");
+                    
+                },
+                error : function (xhr, ajaxOptions, thrownError){  
+                  console.log(xhr.status);          
+                  console.log(thrownError);
+                }
+            });
+}
+</script>
 
 
   
