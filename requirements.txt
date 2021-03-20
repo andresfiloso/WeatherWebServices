@@ -2,4 +2,3 @@ Flask==1.0.2
 Flask-MySQL==1.4.0
 Jinja2==2.11.3
 mysql-connector-python==8.0.12
-
